@@ -10,13 +10,9 @@ import ImagePopup from './ImagePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-
   const [isBigImagePopupOpen, setIsBigImagePopupOpen] = useState(false);
-
   const [selectedCard, setSelectedCard] = useState({});
 
   const handleEditProfile = () => {
