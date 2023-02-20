@@ -1,5 +1,4 @@
-function PopupWithForm(props) {
-  const { name, title, size, text, children, isOpen, onClose } = props;
+function PopupWithForm({ name, title, size, text, children, isOpen, onClose }) {
 
   return (
     <div className={isOpen ? `popup popup_type_${name} popup_opened` : `popup`}>

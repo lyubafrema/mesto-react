@@ -10,8 +10,8 @@ class Api {
     if (response.ok) {
       return response.json();
     }
-    console.log('Произошла какая-то ошибка');
-    return Promise.reject(`Ошибка: ${response.status}`);
+    console.log(`Произошла ошибка: ${response}`);
+    return Promise.reject(`Статус ошибки: ${response.status}`);
   }
 
   // универсальный метод запроса

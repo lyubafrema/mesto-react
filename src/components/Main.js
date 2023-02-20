@@ -2,26 +2,20 @@ import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import Card from "./Card";
 
-function Main(props) {
-  const { onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props;
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
   const [cards, setCards] = useState([]);
 
+
   useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([data, cards]) => {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
-      })
-  }, [])
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((cards) => {
         setCards(cards);
       })
   }, [])
@@ -43,13 +37,7 @@ function Main(props) {
           </div>
           <button type="button" aria-label="Добавить" className="profile__add-button" onClick={onAddPlace}></button>
         </section>
-        <section className="elements">
-          {
-            cards.map((card) =>
-              <Card card={card} onCardClick={onCardClick} />
-            )
-          }
-        </section>
+        <Card cards={cards} onCardClick={onCardClick} />
       </div>
     </main>
   )
