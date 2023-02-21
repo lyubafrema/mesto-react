@@ -9,7 +9,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userAvatar, setUserAvatar] = useState('');
   const [cards, setCards] = useState([]);
 
-
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([data, cards]) => {
@@ -19,6 +18,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         setCards(cards);
       })
   }, [])
+
+  // кажется в этот раз разобралась с маппингом, вчера усложнила что-то очень)
+
+  const cardsElements = cards.map((card) =>
+    <Card card={card} onCardClick={onCardClick} key={card._id} />)
 
   return (
     <main className="content">
@@ -37,7 +41,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
           </div>
           <button type="button" aria-label="Добавить" className="profile__add-button" onClick={onAddPlace}></button>
         </section>
-        <Card cards={cards} onCardClick={onCardClick} />
+        <section className="elements">
+          {cardsElements}
+        </section>
       </div>
     </main>
   )

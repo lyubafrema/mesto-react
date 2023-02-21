@@ -1,19 +1,11 @@
-function Card({ cards, onCardClick }) {
+function Card({ card, onCardClick }) {
 
-  function handleClick(e) {
-    const cardElem = {
-      link: e.target.src,
-      name: e.target.alt,
-      alt: e.target.alt,
-    };
-    onCardClick(cardElem);
+  function handleClick() {
+    onCardClick(card);
   }
 
-  // попробовала вынести маппинг сюда, не знаю насколько верно реализовала, но в целом работает)
-  // handleClick соответственно тоже изменила выше
-
-  const cardsElements = cards.map((card) => {
-    return <article className="element" key={card._id}>
+  return (
+    <article className="element" >
       <button type="button" aria-label="Удалить" className="element__delete"></button>
       <img className="element__image" src={card.link} alt={card.name} onClick={handleClick} />
       <div className="element__container">
@@ -24,13 +16,6 @@ function Card({ cards, onCardClick }) {
         </div>
       </div>
     </article>
-  }
-  )
-
-  return (
-    <section className="elements">
-      {cardsElements}
-    </section>
   )
 }
 export default Card;
