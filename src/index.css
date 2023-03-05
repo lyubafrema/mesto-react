@@ -7,6 +7,7 @@
 @import url('./blocks/header/__logo/header__logo.css');
 @import url('./blocks/spinner/spinner.css');
 @import url('./blocks/spinner/_visible/spinner_visible.css');
+@import url('./blocks/spinner/_container/spinner_container.css');
 @import url('./blocks/container/container.css');
 @import url('./blocks/container/_hidden/container_hidden.css');
 

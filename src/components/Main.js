@@ -1,28 +1,19 @@
-import { useEffect, useState } from "react";
-import { api } from "../utils/api";
-import Card from "./Card";
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+import Card from './Card';
 
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete, cards }) {
 
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([data, cards]) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-        setCards(cards);
-      })
-  }, [])
-
-  // кажется в этот раз разобралась с маппингом, вчера усложнила что-то очень)
+  const currentUser = useContext(CurrentUserContext);
 
   const cardsElements = cards.map((card) =>
-    <Card card={card} onCardClick={onCardClick} key={card._id} />)
+    <Card 
+      key={card._id}
+      card={card} 
+      onCardClick={onCardClick}  
+      onCardLike={onCardLike} 
+      onCardDelete={onCardDelete}/>)
 
   return (
     <main className="content">
@@ -31,11 +22,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         <section className="profile">
           <div className="profile__info">
             <div className="profile__overlay" onClick={onEditAvatar}>
-              <img className="profile__avatar" alt="Фото профиля." src={userAvatar} />
+              <img className="profile__avatar" alt="Фото профиля." src={currentUser.avatar} />
             </div>
             <div className="profile__container">
-              <h1 className="profile__name">{userName}</h1>
-              <p className="profile__caption">{userDescription}</p>
+              <h1 className="profile__name">{currentUser.name}</h1>
+              <p className="profile__caption">{currentUser.about}</p>
             </div>
             <button type="button" aria-label="Редактировать" className="profile__edit-button" onClick={onEditProfile}></button>
           </div>

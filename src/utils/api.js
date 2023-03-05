@@ -65,20 +65,19 @@ class Api {
     });
   }
 
-  // поставить лайк
-  setLike(id) {
-    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: this._headers
-    });
-  }
-
-  // убрать лайк
-  unsetLike(id) {
-    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: this._headers
-    });
+  // меняем информацию о наличие лайка на карточке
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this._request(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "PUT",
+        headers: this._headers
+      })
+    } else {
+      return this._request(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "DELETE",
+        headers: this._headers
+      });
+    }
   }
 
   // сменить аватар
