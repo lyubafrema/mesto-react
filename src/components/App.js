@@ -90,9 +90,8 @@ function App() {
   function handleUpdateUser(data) {
     setSubmitIsLoading(true);
     api.editProfileInfo(data)
-    .then(() => {
-      currentUser.name = data.name;
-      currentUser.about = data.about;
+    .then((data) => {
+      setCurrentUser(data);
       closeAllPopups();
     })
     .catch((err) => {
@@ -106,8 +105,8 @@ function App() {
   function handleUpdateAvatar(data) {
     setSubmitIsLoading(true);
     api.changeAvatar(data)
-    .then(() => {
-      currentUser.avatar = data.avatar;
+    .then((data) => {
+      setCurrentUser(data);
       closeAllPopups();
     })
     .catch((err) => {
@@ -141,6 +140,23 @@ function App() {
     setIsBigImagePopupOpen(false);
     setIsConfirmDeletePopupOpen(false);
   }
+
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || isBigImagePopupOpen || isConfirmDeletePopupOpen;
+
+  useEffect(() => {
+    function closeByEscape(e) {
+      if(e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) { 
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
+
 
   function handleOnOverlayClose(e) {
     if (e.target === e.currentTarget ) {
